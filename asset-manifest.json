@@ -1,17 +1,20 @@
 {
   "files": {
-    "main.css": "/qtify-1/static/css/main.135423e5.css",
-    "main.js": "/qtify-1/static/js/main.d908ef0f.js",
+    "main.css": "/qtify-1/static/css/main.27bdd4ff.css",
+    "main.js": "/qtify-1/static/js/main.577a01a6.js",
     "static/js/488.8f8853cc.chunk.js": "/qtify-1/static/js/488.8f8853cc.chunk.js",
     "static/media/vibratingHeadphone.svg": "/qtify-1/static/media/vibratingHeadphone.14df542056e2c1f05fcdcff5cfc5d1c3.svg",
+    "static/media/logo.svg": "/qtify-1/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "static/media/SearchIcon.svg": "/qtify-1/static/media/SearchIcon.dd412b17d027f487794a6a6efed1d8be.svg",
     "index.html": "/qtify-1/index.html",
-    "main.135423e5.css.map": "/qtify-1/static/css/main.135423e5.css.map",
-    "main.d908ef0f.js.map": "/qtify-1/static/js/main.d908ef0f.js.map",
+    "static/media/rightNav.svg": "/qtify-1/static/media/rightNav.579cb7e3cec88ae7d70ace95e9c3486f.svg",
+    "static/media/leftNav.svg": "/qtify-1/static/media/leftNav.a1cfe7994392f55d6fa33b57404fe0ce.svg",
+    "main.27bdd4ff.css.map": "/qtify-1/static/css/main.27bdd4ff.css.map",
+    "main.577a01a6.js.map": "/qtify-1/static/js/main.577a01a6.js.map",
     "488.8f8853cc.chunk.js.map": "/qtify-1/static/js/488.8f8853cc.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.135423e5.css",
-    "static/js/main.d908ef0f.js"
+    "static/css/main.27bdd4ff.css",
+    "static/js/main.577a01a6.js"
   ]
 }
