@@ -1,63 +1,120 @@
-// import logo from './logo.svg';
-// import './App.css';
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
-
-// export default App;
-
-
-
-// import { useEffect, useState } from "react";
-import "./App.css";
-//import Card from "./components/Card/Card";
-import HeroSection from "./components/HeroSection/HeroSection";
-//@ts-ignore    //no use
-import NavBar from "./components/NavBar/NavBar";
-// import { fetchTopAlbums } from "./components/api/api";
-// import Section from "./components/Sections/Section";
+import logo from './logo.svg';
+import Navbar from './component/Navbar/Navbar';
+import Hero from './component/Hero/Hero';
+import Section from './component/Section/Section';
+import FilterSection from './component/FilterSection/FilterSection';
+import {fetchTopAlbums, fetchNewAlbums, fetchSongs} from './api/api'
+import { useEffect, useState } from 'react';
+import styles from "./App.module.css"
 
 function App() {
-  // const [topAlbumData, settopAlbumData] = useState([]);
-  // const generateTopAlbumData = async () => {
-  //   const data = await fetchTopAlbums();
-  //   console.log(data);
-  //   settopAlbumData(data);
-  // };
-  // useEffect(() => {
-  //   generateTopAlbumData();
-  // }, []);
-  // console.log(topAlbumData, "topAlbumData");
+
+  //state to store top/new Albums, topAlbumSongs is just an array of 16-17 albums with some info and an array of songs in that album
+  const[topAlbumSongs,setTopAlbumSongs]=useState([]);
+  const[newAlbumSongs,setNewAlbumSongs]=useState([]);
+
+  //states related to the working of filterSection of songs:
+  //state to store  original array of songs(unfiltered)
+  const[songsData, setSongsData]=useState([]);
+
+  //to store the index selected inn filters, can be ignored
+  const[value,setValue]= useState(0);
+
+  //to store the finally filtered songs
+  const[filteredData, setFilteredData]=useState([]);
+
+
+  //function to get top/new Album/Songs we will be using function from API file also
+  const generateTopAlbumSongs=async()=>{
+    try{
+      const res= await fetchTopAlbums();
+    setTopAlbumSongs(res);
+    }
+    catch(error){
+      console.log(error);
+      return null;
+    } 
+  }
+
+  const generateNewAlbumSongs=async()=>{
+    try{
+      const res= await fetchNewAlbums();
+    setNewAlbumSongs(res);
+    }
+    catch(error){
+      console.log(error);
+      return null;
+    } 
+  }
+
+  const generateSongs=async()=>{
+    try{
+      console.log("generateSongs");
+      const res=await fetchSongs();
+      setSongsData(res);
+      setFilteredData(res);
+    }
+    catch(error){
+      return null;
+    }
+  }
+
+
+const generateNewSongs=(index)=>{
+
+  let key="";
+  if(index===0){
+    
+    generateSongs();
+    return;
+  }
+  else if(index===1){
+    key="rock";
+  }
+  else if(index===2){
+    key="pop";
+  }
+
+  else if(index===3){
+    key="jazz";
+  }
+  else if(index===4){
+    key="blues";
+  }
+
+  let newSongsArray=songsData.filter((song)=>{
+    console.log("key: ",key)
+    return(song.genre.key===key);
+  })
+
+  console.log("generateNewSongs triggered and filtered this Data: ", newSongsArray)
+  setFilteredData(newSongsArray);
+}
+
+
+
+
+ const handleChangeIndex= async(newValue)=>{
+  console.log("handleChangeIndex triggered with newValue: ",newValue)
+  setValue(newValue);
+  generateNewSongs(newValue);
+ }
+
+  useEffect(()=>{
+    generateTopAlbumSongs();
+    generateNewAlbumSongs();
+    generateSongs();
+  },[])
+
   return (
     <div className="App">
-      <NavBar />
-      <HeroSection />
-      <div className="sectionWrapper" >
-      {/* <Section type="album" title="Top Albums" data={topAlbumData} /> */}
+      <Navbar />
+      <Hero />
+      <div className={styles.sectionWrapper}>
+      <Section type='album' title='Top Albums' data={topAlbumSongs}/>
+      <Section type='album' title='New Albums' data={newAlbumSongs}/>
+      <FilterSection  type='song' title='Songs' value={value} filteredData={filteredData} handleChangeIndex={handleChangeIndex}/>
       </div>
-      {/* <div className="cardContainer">
-      {topAlbumData.map((item) => {
-        return <Card key={item.id} data={item} type="album" />;
-      })}
-      </div> */}
     </div>
   );
 }
